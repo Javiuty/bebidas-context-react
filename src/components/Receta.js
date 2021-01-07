@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ModalContext } from "../context/ModalContext";
 import { ModalConsumer } from "../context/ModalContext";
 import Modal from "@material-ui/core/Modal";
@@ -30,6 +30,16 @@ const Receta = ({ receta }) => {
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
+  const classes = useStyles();
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   // extraer los valores del context
   const { guardarIdReceta } = useContext(ModalContext);
 
@@ -48,10 +58,19 @@ const Receta = ({ receta }) => {
           <button
             type="button"
             className="btn btn-block btn-primary"
-            onClick={() => guardarIdReceta(receta.idDrink)}
+            onClick={() => {
+              guardarIdReceta(receta.idDrink);
+              handleOpen();
+            }}
           >
             Ver Receta
           </button>
+
+          <Modal open={open}>
+            <div style={modalStyle} className={classes.paper}>
+              <h1>Desde Modal</h1>
+            </div>
+          </Modal>
         </div>
       </div>
     </div>
