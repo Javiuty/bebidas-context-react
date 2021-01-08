@@ -4,13 +4,17 @@ import Receta from "./Receta";
 
 const ListaRecetas = () => {
   // extraer las recetas
-  const { recetas } = useContext(RecetasContext);
+  const { recetas, error } = useContext(RecetasContext);
 
   return (
     <div className="row mt-5">
-      {recetas.map((receta) => (
-        <Receta key={receta.idDrink} receta={receta} />
-      ))}
+      {!error ? (
+        recetas.map((receta) => <Receta key={receta.idDrink} receta={receta} />)
+      ) : (
+        <p className="alert alert-primary full-width text-center">
+          Seleccione al menos la categoria
+        </p>
+      )}
     </div>
   );
 };

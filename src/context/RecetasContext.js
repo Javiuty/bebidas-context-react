@@ -10,6 +10,7 @@ const RecetasProvider = (props) => {
     categoria: "",
   });
   const [consultar, guardarConsultar] = useState(false);
+  const [error, setError] = useState(false);
 
   const { nombre, categoria } = busqueda;
 
@@ -20,7 +21,6 @@ const RecetasProvider = (props) => {
 
         const resultado = await axios.get(url);
 
-        // console.log(resultado.data.drinks);
         guardarRecetas(resultado.data.drinks);
       };
       obtenerRecetas();
@@ -29,7 +29,7 @@ const RecetasProvider = (props) => {
 
   return (
     <RecetasContext.Provider
-      value={{ recetas, buscarRecetas, guardarConsultar }}
+      value={{ recetas, error, buscarRecetas, guardarConsultar, setError }}
     >
       {props.children}
     </RecetasContext.Provider>

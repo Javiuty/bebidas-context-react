@@ -8,23 +8,34 @@ const Formulario = () => {
     categoria: "",
   });
 
+  const { nombre, categoria } = busqueda;
+
   const { categorias } = useContext(CategoriasContext);
-  const { buscarRecetas, guardarConsultar } = useContext(RecetasContext);
+  const { buscarRecetas, guardarConsultar, setError } = useContext(
+    RecetasContext
+  );
 
   // fn para leer los contenidos
   const obtenerDatosReceta = (e) => {
     guardarBusqueda({ ...busqueda, [e.target.name]: e.target.value });
   };
 
+  // Handling form
+  const handlingForm = (e) => {
+    e.preventDefault();
+
+    if (categoria === "") {
+      setError(true);
+      return;
+    }
+
+    setError(false);
+    buscarRecetas(busqueda);
+    guardarConsultar(true);
+  };
+
   return (
-    <form
-      className="col-12"
-      onSubmit={(e) => {
-        e.preventDefault();
-        buscarRecetas(busqueda);
-        guardarConsultar(true);
-      }}
-    >
+    <form className="col-12" onSubmit={handlingForm}>
       <fieldset className="text-center">
         <legend>Busca bebidas por Categoría o Ingrediente</legend>
       </fieldset>
