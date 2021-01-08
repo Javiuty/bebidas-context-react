@@ -41,7 +41,9 @@ const Receta = ({ receta }) => {
   };
 
   // extraer los valores del context
-  const { guardarIdReceta } = useContext(ModalContext);
+  const { informacion, guardarIdReceta } = useContext(ModalContext);
+
+  console.log(informacion);
 
   return (
     <div className="col-md-4 mb-3">
@@ -66,7 +68,13 @@ const Receta = ({ receta }) => {
             Ver Receta
           </button>
 
-          <Modal open={open}>
+          <Modal
+            open={open}
+            onClose={() => {
+              handleClose();
+              guardarIdReceta(null);
+            }}
+          >
             <div style={modalStyle} className={classes.paper}>
               <h1>Desde Modal</h1>
             </div>
